@@ -7,6 +7,9 @@ let cardDois = '';
 
 let moves = 0;
 
+let cron = document.querySelector('.timer');
+let seconds = 0;
+
 //criar as cartas
 const createElement = (tag, className) => {
     const element = document.createElement(tag);
@@ -22,23 +25,36 @@ const cardCreator = (numero) => {
     const imgBackFace = createElement('img', 'backFaceImg');
     const imgFrontFace = createElement('img', 'frontFaceImg')
 
-    imgBackFace.setAttribute('src', './assets/back.png')
-    imgFrontFace.setAttribute('src', `./assets/FrontFace${numero}.gif`)
+    //inserindo as imagens
+    imgBackFace.setAttribute('src', './assets/back.png');
+    imgFrontFace.setAttribute('src', `./assets/FrontFace${numero}.gif`);
 
-    front.appendChild(imgFrontFace)
-    back.appendChild(imgBackFace)
+    //inserindo os data-tests
+    imgBackFace.setAttribute('data-test', 'face-down-image');
+    imgFrontFace.setAttribute('data-test', `face-up-image`);
+
+    front.appendChild(imgFrontFace);
+    back.appendChild(imgBackFace);
 
     card.appendChild(front);
     card.appendChild(back);
 
-    card.setAttribute("onclick", "flipCard(this)")
-    card.setAttribute('data-cardId', numero)
-
+    card.setAttribute("onclick", "flipCard(this)");
+    card.setAttribute('data-cardId', numero);
+    card.setAttribute('data-test', 'card');
+    
     board.appendChild(card);
     return card
 
 }
 
+function startCron(){
+    console.log("estou aqui")
+    this.cronometer = setInterval(()=> {
+        const currentTime = +cron.innerHTML;
+        cron.innerHTML =  currentTime + 1;
+    }, 1000)
+}
 function boardPreparation() {
     
     //quantidade de cartas que o usuário quer
@@ -50,16 +66,19 @@ function boardPreparation() {
     const shuffledArry = ([...arr, ...arr]).sort(()=> Math.random () - 0.5)
     //verificar se o número digitado é [4,14]%2===0
     if (cardsQttDistribution >= 4 && cardsQttDistribution <= 14 && cardsQttDistribution % 2 === 0) {
-        //se for, começa o jogo
+        //se for, começa o jogo e o timer
         for (let i = 0; i < cardsQttDistribution; i++) {
             //crie as cartas
             cardCreator(shuffledArry[i]);
         }
+        startCron()
         return;
     } else {
         //se não for, pergunte novamente
         boardPreparation();
     }
+
+    
 }
 boardPreparation();
 
@@ -102,14 +121,15 @@ function flipCard(cards) {
 }
 
 function restartGame() {
-    alert (`Você ganhou em ${moves} jogadas!`)
-    /*const response = prompt('Deseja continuar?');
+    clearInterval(this.cronometer)
+    alert (`Você ganhou em ${moves} jogadas! A duração do jogo foi de ${cron.innerHTML} segundos!`);
+    const response = prompt('Deseja continuar?');
 
     if(response==='sim'){
         location.reload();
     }else{
         return
-    }*/
+    }
     
 }
 

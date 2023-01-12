@@ -34,6 +34,7 @@ body {
     justify-content: center;
     max-width: 1250px;
     flex-wrap: wrap;
+    position: relative;
 }
 
 .card {
@@ -54,8 +55,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;    
-    
-    
     position: absolute;
 }
 
@@ -77,9 +76,9 @@ img {
 }
 
 .timer {
-    position: fixed;
+    position: absolute;
     top:10px;
-    right: 10px;
+    right: 36px;
     width: 46px;
     height: 47px;
     text-align: center;

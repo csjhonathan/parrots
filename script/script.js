@@ -32,16 +32,19 @@ const cardCreator = (numero) => {
     //inserindo os data-tests
     imgBackFace.setAttribute('data-test', 'face-down-image');
     imgFrontFace.setAttribute('data-test', `face-up-image`);
+    card.setAttribute('data-test', 'card');
 
+    //inserindo as imgs dentro das divs
     front.appendChild(imgFrontFace);
     back.appendChild(imgBackFace);
 
+    //inserindo as faces das cartas
     card.appendChild(front);
     card.appendChild(back);
 
     card.setAttribute("onclick", "flipCard(this)");
     card.setAttribute('data-cardId', numero);
-    card.setAttribute('data-test', 'card');
+    
     
     board.appendChild(card);
     return card
@@ -116,26 +119,27 @@ function flipCard(cards) {
         cards.classList.add('flip');
         cardDois = cards;
         verifyCards(cards)
-        endGame()
+        endGame(moves)
     }
 }
 
 function restartGame() {
-    clearInterval(this.cronometer)
-    alert (`Você ganhou em ${moves} jogadas! A duração do jogo foi de ${cron.innerHTML} segundos!`);
-    const response = prompt('Deseja continuar?');
+    let response = prompt('Deseja continuar? DIGITE: "sim" ou "não"');
 
-    if(response==='sim'){
+    if(response!=='sim' && response!=='não'){
+        restartGame()
+    }else if(response==='sim'){
         location.reload();
     }else{
         return
     }
-    
 }
 
 function endGame(moves){
     if(Number(cardsQttDistribution)===document.querySelectorAll('.flip').length){
+        clearInterval(this.cronometer);
         setTimeout(() => {
+            alert (`Você ganhou em ${moves} jogadas! A duração do jogo foi de ${cron.innerHTML} segundos!`);
             restartGame()
         }, 500)
 

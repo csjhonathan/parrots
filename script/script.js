@@ -1,4 +1,3 @@
-//criar as cartas
 const arr = [];
 let cardsQttDistribution = 0;
 let board = document.querySelector('.board');
@@ -8,7 +7,7 @@ let cardDois = '';
 
 let moves = 0;
 
-
+//criar as cartas
 const createElement = (tag, className) => {
     const element = document.createElement(tag);
     element.className = className;
@@ -97,10 +96,29 @@ function flipCard(cards) {
         moves += 1;
         cards.classList.add('flip');
         cardDois = cards;
-
         verifyCards(cards)
+        endGame()
     }
+}
+
+function restartGame() {
+    alert (`Você ganhou em ${moves} jogadas!`)
+    /*const response = prompt('Deseja continuar?');
+
+    if(response==='sim'){
+        location.reload();
+    }else{
+        return
+    }*/
     
-    console.log(moves)
+}
+
+function endGame(moves){
+    if(Number(cardsQttDistribution)===document.querySelectorAll('.flip').length){
+        setTimeout(() => {
+            restartGame()
+        }, 500)
+
+    }
 }
 

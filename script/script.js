@@ -26,7 +26,7 @@ const createElement = (tag, className) => {
 const cardCreator = (cardId) => {
 
     //criando os elementos
-    const card = createElement('div', 'card');//<-- a carta em cim
+    const card = createElement('div', 'card');//<-- a carta em si
     const front = createElement('div', 'front face');//<-- div que recebe a face com o gif
     const back = createElement('div', 'back face');//<-- div que recebe a face com o parrot estático
     const imgBackFace = createElement('img', 'backFaceImg');//<-- tag img do parrot estático em si
